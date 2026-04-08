@@ -19,7 +19,7 @@ ___INFO___
     "displayName": "Hyperguard",
     "thumbnail": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADPUlEQVR42u2bvW/TQBjGn/ecOEnzHTcNaZsF8VEYWBgqwcLAwAADLGxMiAEWxMgfwM7AwsCKWEBCiIGFhW+xgEQZkNqSotKmNKShSfNlH0OF7lxEqGKnsuM7KVLOkV7d/d7H5+e9+Ah9WuPWRY4RaPGbD+hfv9EoT3w3ICgIE+8HggVt8jvnyhDwxoKW/Z0qCLwCKIjZ/+sWUAAUAAVAAVAAFAAFIJAt5KfBakdPQD99Cei00Xl2D+b8hwApIBxB5OxVUDwDyhYQPnnBBwrQQtDPXAYlDfRePYJZnhvcs0digCYNl3PvA9AOHEfo2KltqRX3Y+v2FcAyBxypbutatYr3F0GWyYsMRuOgaHxwBYQjtj7/8c37AChp2C8Mmn0AFEvaQ62V/QAgJzqdFnirMXiwsZQdwMqiHwBkXcsYxdNC/ps18EbNBwBS4wLAqrOMUTovZX/BB06QaaBExjXJspQhwfQBAEpkAWISgHln8XJF19S0NwAk+cPswlpbchINTAZQKXsfgOwBrLUlR49AZhSBPz7A7IK7ZIKGqwBp0eLVFWeDnD4sYFZXAG55vxq0ARj0+R8KQysdQWj2nARz2R/lMKXFGsDyJVDKAK9XASIgFAbpUUCPbVvkWGL7k8iCkjlQ0gDlimDGpL0AAsDr6/4AwDIF8b00g9i1O67E5b+qPtgRYppNAW42vvnT+wqgTN7mAWCZsCplWKuL4NXvsGoV8I0KeH0dvFnvU9sTtJlZRM5ft9lgzwNg2X1iwI0NtO7eGHAh5LC+frJf2dr0/i1AxpTwQAsfnVWB+o59gJYPALDxafeKoLG0/xTAJAXw9WWHNUXGvqHSbXsdAIEmSgKAQ9vqiqHaSwCUK4D0mLQI1hz6iQnRaTW9D0CbPGi/Z9vOBk3yE6XX8T4AuXBBr+t4/56yBSmeHwBMHRIZ62w5j5cajqMc3howlnTNt1M0LvYBXPw3aKgAzM+v7Rshzt2/iP3lvfcBdJ7fhzn3ErxRQ+/tE2dTbzXQffEQvN1E791TdN88Vu8JqhckFAAFQAFQABQABUABUADcAtDvUCECcHxOKeB/R0tH/fCkUsBuDhiP8tFZdXgaAT8+/xuAaiFQxFLMOAAAAABJRU5ErkJggg\u003d\u003d"
   },
-  "description": "",
+  "description": "Detect bot traffic and protect ad spend with Hyperguard. Real-time detection, cookie-free, GDPR-friendly. Results pushed to dataLayer automatically.",
   "categories": [
     "ADVERTISING",
     "ANALYTICS"
