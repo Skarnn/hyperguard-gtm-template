@@ -1,5 +1,5 @@
 homepage: "https://hyperguard.app"
 documentation: "https://docs.hyperguard.app/installation/tracker-script"
 versions:
-  - sha: 5d358e5668cbb3ad7cf457e1bd405a40573ff195
+  - sha: a60038f4063fa9d2bbcacef9ec64c1f5eae569ed
     changeNotes: "Initial release — tag template for Hyperguard Bot Detection tracker v2.24.1"
