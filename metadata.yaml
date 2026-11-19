@@ -1,5 +1,7 @@
-homepage: "https://hyperguard.app"
-documentation: "https://docs.hyperguard.app/installation/tracker-script"
+homepage: "https://www.hyperguard.app"
+documentation: "https://github.com/Skarnn/hyperguard-gtm-template#readme"
 versions:
+  - sha: 50ccf55cd929b4b32d0591dcdb5f2219f3f76191
+    changeNotes: "Grants the HG_CONFIG read access the tag needs to load the tracker. Removes the blocking-trigger example and the debug and custom endpoint settings. Notes describe the current tracker (no cookie)."
   - sha: 197d96fa25ac7c86f7253c2040e56b379f833a71
     changeNotes: "Initial release — tag template for Hyperguard Bot Detection tracker v2.24.1"
