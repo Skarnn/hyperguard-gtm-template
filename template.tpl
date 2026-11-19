@@ -19,7 +19,7 @@ ___INFO___
     "displayName": "Hyperguard",
     "thumbnail": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADPUlEQVR42u2bvW/TQBjGn/ecOEnzHTcNaZsF8VEYWBgqwcLAwAADLGxMiAEWxMgfwM7AwsCKWEBCiIGFhW+xgEQZkNqSotKmNKShSfNlH0OF7lxEqGKnsuM7KVLOkV7d/d7H5+e9+Ah9WuPWRY4RaPGbD+hfv9EoT3w3ICgIE+8HggVt8jvnyhDwxoKW/Z0qCLwCKIjZ/+sWUAAUAAVAAVAAFAAFIJAt5KfBakdPQD99Cei00Xl2D+b8hwApIBxB5OxVUDwDyhYQPnnBBwrQQtDPXAYlDfRePYJZnhvcs0digCYNl3PvA9AOHEfo2KltqRX3Y+v2FcAyBxypbutatYr3F0GWyYsMRuOgaHxwBYQjtj7/8c37AChp2C8Mmn0AFEvaQ62V/QAgJzqdFnirMXiwsZQdwMqiHwBkXcsYxdNC/ps18EbNBwBS4wLAqrOMUTovZX/BB06QaaBExjXJspQhwfQBAEpkAWISgHln8XJF19S0NwAk+cPswlpbchINTAZQKXsfgOwBrLUlR49AZhSBPz7A7IK7ZIKGqwBp0eLVFWeDnD4sYFZXAG55vxq0ARj0+R8KQysdQWj2nARz2R/lMKXFGsDyJVDKAK9XASIgFAbpUUCPbVvkWGL7k8iCkjlQ0gDlimDGpL0AAsDr6/4AwDIF8b00g9i1O67E5b+qPtgRYppNAW42vvnT+wqgTN7mAWCZsCplWKuL4NXvsGoV8I0KeH0dvFnvU9sTtJlZRM5ft9lgzwNg2X1iwI0NtO7eGHAh5LC+frJf2dr0/i1AxpTwQAsfnVWB+o59gJYPALDxafeKoLG0/xTAJAXw9WWHNUXGvqHSbXsdAIEmSgKAQ9vqiqHaSwCUK4D0mLQI1hz6iQnRaTW9D0CbPGi/Z9vOBk3yE6XX8T4AuXBBr+t4/56yBSmeHwBMHRIZ62w5j5cajqMc3howlnTNt1M0LvYBXPw3aKgAzM+v7Rshzt2/iP3lvfcBdJ7fhzn3ErxRQ+/tE2dTbzXQffEQvN1E791TdN88Vu8JqhckFAAFQAFQABQABUABUADcAtDvUCECcHxOKeB/R0tH/fCkUsBuDhiP8tFZdXgaAT8+/xuAaiFQxFLMOAAAAABJRU5ErkJggg\u003d\u003d"
   },
-  "description": "Detect bot traffic and protect ad spend with Hyperguard. Real-time detection, cookie-free, GDPR-friendly. Results pushed to dataLayer automatically.",
+  "description": "Detect bot traffic and protect ad spend with Hyperguard. Real-time detection, with the verdict pushed to the dataLayer automatically.",
   "categories": [
     "ADVERTISING",
     "ANALYTICS"
@@ -67,7 +67,7 @@ ___TEMPLATE_PARAMETERS___
         ]
       }
     ],
-    "help": "Your Hyperguard API Key. Find it in your Hyperguard dashboard under Properties \u003e Installation. Format: hg_live_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    "help": "Your Hyperguard API Key. Generate it in your Hyperguard dashboard under Properties \u003e Installation; it is shown once, so copy it then. Format: hg_live_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   },
   {
     "type": "CHECKBOX",
@@ -76,37 +76,6 @@ ___TEMPLATE_PARAMETERS___
     "simpleValueType": true,
     "defaultValue": false,
     "help": "Enable for React, Vue, Angular, Next.js, or other client-side routed apps. Automatically tracks page navigations via the History API."
-  },
-  {
-    "type": "CHECKBOX",
-    "name": "enableDebug",
-    "checkboxText": "Enable debug logging",
-    "simpleValueType": true,
-    "defaultValue": false,
-    "help": "Logs detection activity to the browser console for troubleshooting. Disable in production."
-  },
-  {
-    "type": "GROUP",
-    "name": "advancedSettings",
-    "displayName": "Advanced Settings",
-    "groupStyle": "ZIPPY_CLOSED",
-    "subParams": [
-      {
-        "type": "TEXT",
-        "name": "apiEndpoint",
-        "displayName": "Custom API Endpoint (optional)",
-        "simpleValueType": true,
-        "help": "Override the default API endpoint (api.hyperguard.app). Leave blank for standard operation.",
-        "valueValidators": [
-          {
-            "type": "REGEX",
-            "args": [
-              "^(https://.*|)$"
-            ]
-          }
-        ]
-      }
-    ]
   }
 ]
 
@@ -117,7 +86,6 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 // Sets window.HG_CONFIG and injects the tracker script.
 // The tracker automatically pushes a 'hyperguard_detection' event to dataLayer.
 
-const log = require('logToConsole');
 const injectScript = require('injectScript');
 const setInWindow = require('setInWindow');
 
@@ -133,21 +101,9 @@ if (data.enableSPA) {
   config.enableSPA = true;
 }
 
-if (data.enableDebug) {
-  config.enableDebug = true;
-}
-
-if (data.apiEndpoint) {
-  config.apiEndpoint = data.apiEndpoint;
-}
-
 // Set config on window BEFORE script loads.
 // The tracker reads window.HG_CONFIG first (priority over data-* attributes).
 setInWindow('HG_CONFIG', config, true);
-
-if (data.enableDebug) {
-  log('Hyperguard: Loading tracker with config:', config);
-}
 
 // Inject the tracker script.
 // Cache token 'hyperguardTracker' prevents double-loading on SPA navigations.
@@ -220,50 +176,11 @@ ___WEB_PERMISSIONS___
                   },
                   {
                     "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
                     "boolean": true
                   },
                   {
                     "type": 8,
-                    "boolean": false
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "hyperguard"
-                  },
-                  {
-                    "type": 8,
                     "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
                   },
                   {
                     "type": 8,
@@ -272,26 +189,6 @@ ___WEB_PERMISSIONS___
                 ]
               }
             ]
-          }
-        }
-      ]
-    },
-    "clientAnnotations": {
-      "isEditedByUser": true
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
-        "publicId": "logging"
-      },
-      "param": [
-        {
-          "key": "environments",
-          "value": {
-            "type": 1,
-            "string": "debug"
           }
         }
       ]
@@ -313,7 +210,6 @@ scenarios:
       clientId: 'hg_abcdefgh12345678',
       apiKey: 'hg_live_abcdefghijklmnopqrstuvwxyz123456',
       enableSPA: false,
-      enableDebug: false,
       gtmOnSuccess: () => {},
       gtmOnFailure: () => {}
     };
@@ -323,7 +219,6 @@ scenarios:
       assertThat(value.clientId).isEqualTo(mockData.clientId);
       assertThat(value.apiKey).isEqualTo(mockData.apiKey);
       assertThat(value.enableSPA).isUndefined();
-      assertThat(value.enableDebug).isUndefined();
     });
 
     mock('injectScript', (url, onSuccess) => {
@@ -339,7 +234,6 @@ scenarios:
       clientId: 'hg_abcdefgh12345678',
       apiKey: 'hg_live_abcdefghijklmnopqrstuvwxyz123456',
       enableSPA: true,
-      enableDebug: false,
       gtmOnSuccess: () => {},
       gtmOnFailure: () => {}
     };
@@ -354,57 +248,12 @@ scenarios:
 
     runCode(mockData);
     assertApi('gtmOnSuccess').wasCalled();
-- name: Tag fires with debug mode
-  code: |-
-    const mockData = {
-      clientId: 'hg_abcdefgh12345678',
-      apiKey: 'hg_test_abcdefghijklmnopqrstuvwxyz123456',
-      enableSPA: false,
-      enableDebug: true,
-      gtmOnSuccess: () => {},
-      gtmOnFailure: () => {}
-    };
-
-    mock('setInWindow', (key, value) => {
-      assertThat(value.enableDebug).isTrue();
-    });
-
-    mock('injectScript', (url, onSuccess) => {
-      onSuccess();
-    });
-
-    runCode(mockData);
-    assertApi('gtmOnSuccess').wasCalled();
-    assertApi('logToConsole').wasCalled();
-- name: Tag fires with custom API endpoint
-  code: |-
-    const mockData = {
-      clientId: 'hg_abcdefgh12345678',
-      apiKey: 'hg_live_abcdefghijklmnopqrstuvwxyz123456',
-      enableSPA: false,
-      enableDebug: false,
-      apiEndpoint: 'https://custom.example.com/v1/events',
-      gtmOnSuccess: () => {},
-      gtmOnFailure: () => {}
-    };
-
-    mock('setInWindow', (key, value) => {
-      assertThat(value.apiEndpoint).isEqualTo('https://custom.example.com/v1/events');
-    });
-
-    mock('injectScript', (url, onSuccess) => {
-      onSuccess();
-    });
-
-    runCode(mockData);
-    assertApi('gtmOnSuccess').wasCalled();
 - name: Tag calls gtmOnFailure when script fails to load
   code: |-
     const mockData = {
       clientId: 'hg_abcdefgh12345678',
       apiKey: 'hg_live_abcdefghijklmnopqrstuvwxyz123456',
       enableSPA: false,
-      enableDebug: false,
       gtmOnSuccess: () => {},
       gtmOnFailure: () => {}
     };
@@ -419,25 +268,46 @@ scenarios:
 
 ___NOTES___
 
-Hyperguard Bot Detection — GTM Community Template v1.0.0
-Tracker version: 2.24.1
+Hyperguard Bot Detection — GTM Community Template
 
 WHAT IT DOES:
 - Sets window.HG_CONFIG with your credentials before the script loads
 - Injects hg-tracker.min.js from api.hyperguard.app
-- The tracker automatically pushes a 'hyperguard_detection' event to dataLayer
+- The tracker pushes a 'hyperguard_detection' event to dataLayer on each
+  page it tracks: on a visit's first page once Hyperguard has answered, on
+  its later pages at once with the visit's verdict (a second event follows
+  only if Hyperguard's answer differs)
 
 DATALAYER EVENT:
   event: 'hyperguard_detection'
   hyperguard.sessionId: string
   hyperguard.isBot: boolean
 
-BLOCKING BOT TRAFFIC:
-Create a Custom Event trigger on 'hyperguard_detection' with condition
-hyperguard.isBot equals true, then add it as a blocking trigger on your ad tags.
+USING THE VERDICT:
+Create a Data Layer Variable for hyperguard.isBot and use it in your own
+triggers: for example, fire a tag only when it equals false, or block a tag
+when it equals true. GTM checks trigger conditions on each event, so the
+verdict is available on 'hyperguard_detection' and on every later event of
+the page. Tags that fire before it arrives (All Pages, Initialization) cannot
+use it.
+
+CONVERSION SIGNAL (optional):
+Create a Custom HTML tag containing
+  <script>window.hyperguard.trackConversion('purchase');</script>
+('purchase', 'signup' or 'lead'). Fire it with a Custom Event trigger on
+'hyperguard_detection' plus a condition that matches your confirmation page.
+When that event fires the tracker is loaded; trackConversion waits for
+Hyperguard's answer before it sends. If a page gets a second event (the
+verdict changed), the tag fires twice and the first conversion is recorded.
+A flagged session that converts is left out of invalid-traffic reports and its
+request evidence is deleted; it does not change how sessions are scored.
+The confirmation page must be on the same origin as the tracked site.
 
 PRIVACY:
-No cookies used. Data stored in localStorage only.
-Operates under GDPR legitimate interest (Art 6(1)(f)) for security/fraud prevention.
+The tracker keeps the visit's session in localStorage (hg_session,
+hg_session_activity) and sets no cookie. It reads browser and device
+characteristics for bot detection. Details: https://www.hyperguard.app/privacy
+If your consent policy requires it, open this tag's Advanced Settings >
+Consent Settings and require additional consent.
 
 
